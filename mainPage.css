@@ -1,0 +1,31 @@
+.introTitle{
+    font-size: 40px;
+}
+.introSubTitle{
+    font-size: 25px;
+    padding-bottom: 15px;
+}
+body{
+     background-color: #f3cfff;
+}
+.fixed-header {
+    text-align: center;
+    position: fixed;
+    width: 95%;
+    top: 5;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    z-index: 1000; /* Ensures the header is on top of other content */
+    background-color: rgb(136, 136, 136);
+    border: black;
+    border-style: groove;
+    border-width: 10px;
+    border-radius: 50px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    
+}
+.fixed-header img{
+    width: 60px;
+    vertical-align: bottom;
+}
