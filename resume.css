@@ -1,25 +1,35 @@
 .resumeTitle{
     text-align: center;
-    font-size: 40px;
-    color: rgb(108, 1, 108);
-    text-shadow: 1px 1px rgb(118, 1, 118);
+    font-size: 50px;
+    color: rgb(82, 35, 177);
+    text-shadow: 1px 1px rgb(75, 1, 118);
 }
 .btns button{
     position: fixed;
     top: 10px;
     right:10px;
-    width: 150px;
+    width: 70px;
     height: 40px;
+    background-color:red; 
+    color: white;
+    font-size: 20px;
 }
 body{
     background-color: #f3cfff;
 }
+.exp-cards{
+    display: flex;
+    justify-content: center;
+}
 .flip-card {
   background-color: transparent;
-  width: 200px;
-  height: 400px;
+  width: 300px;
+  height: 350px;
   border: 1px solid #f1f1f1;
-  perspective: 1000px; 
+  perspective: 1000px;
+  border-radius: 5%;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .flip-card-inner {
   position: relative;
@@ -28,7 +38,13 @@ body{
   text-align: center;
   transition: transform 0.8s;
   transform-style: preserve-3d;
+  transform: rotateY(0deg);
 }
+
+.flip-card-inner.active {
+  transform: rotateY(180deg);
+}
+
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
@@ -37,12 +53,21 @@ body{
 }
 
 .flip-card-front {
-  background-color: #bbb;
-  color: black;
+  background-color: #cd9ada;
+  color:rgb(108, 1, 108);
+  border-radius: 5%;
+  border-radius: 5%;
+  border-width: 4px;
+  border-style: solid;
+  font-weight: 400;
 }
 
 .flip-card-back {
-  background-color: dodgerblue;
-  color: white;
+  background-color: rgb(252, 254, 255);
+  color: rgb(0, 0, 0);
   transform: rotateY(180deg);
+  font-weight: 150;
+  border-radius: 5%;
+  border-width: 4px;
+  border-style: solid;
 }
