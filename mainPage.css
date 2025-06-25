@@ -3,29 +3,43 @@
 }
 .introSubTitle{
     font-size: 25px;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
+}
+.buttonGroup button{
+    background-color: rgb(142, 142, 244);
+    font-weight: 800;
+    width: 350px;
+    height: 70px;
+    border-radius: 15%;
+    font-size: larger;
+    margin: 10px;
 }
 body{
      background-color: #f3cfff;
 }
 .fixed-header {
     text-align: center;
+    align-items: center;
+    justify-content: center;
     position: fixed;
-    width: 95%;
+    width: 85%;
     top: 5;
     left: 0;
     right: 0;
     margin: 0 auto;
-    z-index: 1000; /* Ensures the header is on top of other content */
+    z-index: 1000; /*This will hold the header to the top*/
     background-color: rgb(136, 136, 136);
     border: black;
     border-style: groove;
     border-width: 10px;
-    border-radius: 50px;
+    border-radius: 15%;
     font-family: Georgia, 'Times New Roman', Times, serif;
+    padding-bottom: 20px;
     
 }
 .fixed-header img{
     width: 60px;
     vertical-align: bottom;
+    background-color: black;
+    border-radius: 50%;
 }
