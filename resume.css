@@ -20,6 +20,7 @@ body{
 .exp-cards{
     display: flex;
     justify-content: center;
+    padding-top: 10px;
 }
 .flip-card {
   background-color: transparent;
@@ -31,6 +32,56 @@ body{
   padding-left: 10px;
   padding-right: 10px;
 }
+.hexagon {
+  width: 160px;
+  height: 138px; /* height = width * sqrt(3)/2 for a regular hexagon */
+  perspective: 1000px;
+  margin: 20px;
+}
+
+.hex-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.hex-inner.active {
+  transform: rotateY(180deg);
+}
+
+.hex-card-front, .hex-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgb(63, 19, 73);
+  clip-path: polygon(
+    50% 0%, 
+    100% 25%, 
+    100% 75%, 
+    50% 100%, 
+    0% 75%, 
+    0% 25%
+  );
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1em;
+  padding: 10px;
+  text-align: center;
+  border: 2px solid white;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+}
+
+.hex-card-back {
+  background: rgb(136, 152, 246);
+  color: black;
+  transform: rotateY(180deg);
+}
+
 .flip-card-inner {
   position: relative;
   width: 100%;
