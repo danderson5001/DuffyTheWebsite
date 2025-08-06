@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Duffy's Website</title>
+    <link rel="icon" type="image/png" href="../icons/onion.ico">
     <link rel="stylesheet" href="quiz.css">
 </head>
 <body>
-    <div class="qtwrap">
+    <div class="beforeQuiz">
+        <div class="qtwrap">
         <h1 class="quizTitleShadow">DUFFY QUIZ!!!!</h1>
         <h1 class="quizTitle">DUFFY QUIZ!!!!</h1>
+        </div>
+        <div id="userInfo">
+            <h1 style="margin-top:160px; font-size: 40px; color:black; text-align: center;">You will need your username and password later!</h1>
+            <label for="user">Username:</label><br>
+            <input type="text" id="user" name="user"  style="font-size: 30px;" placeholder="username"><br>
+            <label for="pass">Password: </label><br>
+            <input type="text" id="pass" name="pass" style="font-size: 30px;" placeholder="password"><br>
+            <button id="loginBtn">Login</button>
+
+            <!--there will be a button that takes in the info and takes you to the quiz, it will use your user and password to start a file 
+            This is where your score and info is stored and calculated so you can see your progress over time -->
+        </div>
     </div>
-    <h1 style="margin-top:160px; font-size: 40px; color:black; text-align: center;">You will need your username and password later!</h1>
-    <div class="userInfo">
-        <label for="user">Username:</label><br>
-        <input type="text" id="user" name="user"  style="font-size: 30px;" placeholder="username"><br>
-        <label for="pass">Password: </label><br>
-        <input type="text" id="pass" name="pass" style="font-size: 30px;" placeholder="password"><br>
-        <!-- Here there will be a button that takes in the info and takes you to the quiz, it will use your user and password to start a file 
-         This is where your score and info is stored and calculated so you can see your progress over time -->
+    <div id="theQuiz">
+        <h2 style="margin-top:160px; font-size: 30px; color:black; text-align: center;">Answer each question truthfully in 2500 characters or less (there is no penalty for more or less words).<br> Find out how Duffy you are!</h1>
+        
+        <h1> Question 1:</h1>
+        <label for="q1" style="font-size: 25px;">It's a Tuesday, what's the plan?</label><br>
+        <textarea id="q1" rows="10" cols="100" style="font-size: 20px;" maxlength="2500" placeholder="2500 character limit"></textarea>
+
+        <h1> Question 2:</h1>
+        <label for="q2" style="font-size: 25px;">Describe the perfect spirit animal?</label><br>
+        <textarea id="q2" rows="10" cols="100" style="font-size: 20px;" maxlength="2500" placeholder="2500 character limit"></textarea>
+        
+        <h1> Question 3:</h1>
+        <label for="q3" style="font-size: 25px;">Who is The Onion King?</label><br>
+        <textarea id="q3" rows="10" cols="100" style="font-size: 20px;" maxlength="2500" placeholder="2500 character limit"></textarea>
+
+        <h1> Question 4:</h1>
+        <label for="q4" style="font-size: 25px;"></label>Whats your death row meal?<br>
+        <textarea id="q4rows="10" cols="100" style="font-size: 20px;" maxlength="2500" placeholder="2500 character limit"></textarea>
+
+        <h2 style="font-size: 30px; color:black; text-align: center;">Now for the short answer portion, 35 characters or less!</h1>
+        <h1> Question 5:</h1>
+        <label for="q5" style="font-size: 25px;">What number am I thinking of?</label><br>
+        <textarea id="q5" rows="4" cols="100" style="font-size: 20px;" maxlength="35" placeholder="35 character limit"></textarea>
+
+        <h1> Question 6:</h1>
+        <label for="q6" style="font-size: 25px;">What makes Duffy sad?</label><br>
+        <textarea id="q6" rows="4" cols="100" style="font-size: 20px;" maxlength="35" placeholder="35 character limit"></textarea>
+    
+        <h1> Question 7:</h1>
+        <label for="q7" style="font-size: 25px;">What are the two scariest things?</label><br>
+        <textarea id="q7" rows="4" cols="100" style="font-size: 20px;" maxlength="35" placeholder="35 character limit"></textarea>
+        
+        <h1> Question 8:</h1>
+        <label for="q8" style="font-size: 25px; ">Name one actor in a movie about Duffy's life?</label><br>
+        <textarea id="q8" rows="4" cols="100" style="font-size: 20px;" maxlength="35" placeholder="35 character limit"></textarea>
+    
     </div>
+    <!--investigate the use of defer here, still not sure why it solved the problem, or if-->
+    <script src="quiz.js" defer></script>
 </body>
