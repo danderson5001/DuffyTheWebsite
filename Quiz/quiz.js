@@ -39,8 +39,7 @@ function main(){
         if(submitContinue){
             checkScore(qs, 1);
         }
-        let dq1 =["going up", "going hard", "going ham", "brewski", "the boys", "cocktails", "karoake", "swim"];
-        let dq2 =["hippo", "grinch", "panda", "fluffy", "","power"];
+        
     }
 }
 
@@ -55,9 +54,71 @@ function checkScore(qs, attemptNum){
      Step 3: 5-8 = 5 points each
     */
 
+    // -- 1
     score += 20 - attemptNum * 5;
 
-    // zero indexed, so this is for question one
-    let q1 = qs[0];
+    //Questions and goal answers
+
+    // "It's a Tuesday, what's the plan?"
+    let q1d =["going up", "going hard", "going ham", "brewski", "the boys", "cocktails", "karoake", "swim"];
+    
+    // "Describe the perfect spirit animal?"
+    let q2d =["hippo", "grinch", "panda", "fluffy", "fangs","power","flames"];
+    
+    // "Who is The Onion King?"
+    let q3d =["onion", ""];
+    // "Whats your death row meal?"
+    let q4d =[];
+    // "What number am I thinking of?"
+    let q5d =[];
+    // "What makes Duffy sad?"
+    let q6d =[];
+    // "What are the two scariest things?"
+    let q7d =[];
+    // "Name one actor in a movie about Duffy's life?"
+    let q8d =[];
+
+    let qsd = [q1d, q2d, q3d, q4d, q5d, q6d, q7d, q8d];
+    for(let j = 0;j < qsd.length; j++){
+        let qscore = 0
+        let qp = (qs[j]).toLowerCase();
+        for (let i = 0; i < qsd[j].length; i++){
+            if(qp.includes(qsd[j][i])){
+                if(j < 4){
+                     if(qscore<12){
+                        qscore +=6;
+                    } else if(qscore < 15){
+                        qscore +=1;
+                    }//upper 4 score break down, 6,6,1,1,1
+                }//checks if it the first four questions or not
+                else {
+                    if(qscore < 8){
+                        qscore +=8;
+                    }
+                    else if(qscore<10) {
+                        qscore += 1;
+                    }
+                }//post 4 questions
+            }//checks if the word occcurs in the goal list
+        }//Sort through each response
+        score += q1score;
+    }// sort through which question
+
+    // -- 2
+    /* 
+        zero indexed, so this is for question one
+        
+        qp = question player will be overwritten with each question
+        q1d = question 1 Duffy
+    */
+    
+
+    /*
+
+    */
+
+
+
+
 
 }
