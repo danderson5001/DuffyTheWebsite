@@ -80,6 +80,7 @@ body{
   background: rgb(136, 152, 246);
   color: black;
   transform: rotateY(180deg);
+  font-size: 90%;
 }
 
 .flip-card-inner {
@@ -121,4 +122,13 @@ body{
   border-radius: 5%;
   border-width: 4px;
   border-style: solid;
+}
+
+#planediv{
+  position:absolute;
+  top: 100px;           /* initial Y position */
+  left: 100px;          /* initial X position */
+  width: 100px;         /* size */
+  height: auto;         /* keeps aspect ratio */
+  /*display: none;*/  
 }

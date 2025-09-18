@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", function (){
    main();
 })
 
+let output1elem = document.getElementById("output1");
+let output2elem = document.getElementById("output2");
+let scoreFin = document.getElementById("score");
+let score =0;
 function main(){
     let submitContinue = true;
     document.getElementById("theQuiz").style.display = "none";
@@ -57,7 +61,6 @@ function main(){
 //This method is pretty hrd coded and I would love to swap it with a vector database solution soon
 function checkScore(qs, attemptNum){
     //This portion should be well annotated, DUFFY!!
-    let score = 0;
 
     /* 
      Step 1: 20 - 5 * attempts
@@ -113,11 +116,11 @@ function checkScore(qs, attemptNum){
         }//Sort through each response
         score += qscore;
     }// sort through which question
-
+    scoreFin.innerHTML = score
     return score;
 }
 
-function quizComplete(score){
+function quizComplete(score, attemptNum){
     let concludingString1 = "You've attempted the quiz " + attemptNum + " times.\n";
     concludingString1 += "You're Score:";
     let concludingString2 = "Which means...\n";
@@ -132,4 +135,7 @@ function quizComplete(score){
     } else{
         concludingString2 += "You very well might be Duffy";
     }
+
+    output1elem.innerHTML = concludingString1;
+    output2elem.innerHTML = concludingString2;
 }
