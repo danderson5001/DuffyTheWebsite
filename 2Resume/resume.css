@@ -126,9 +126,15 @@ body{
 
 #planediv{
   position:absolute;
-  top: 100px;           /* initial Y position */
-  left: 100px;          /* initial X position */
-  width: 100px;         /* size */
-  height: auto;         /* keeps aspect ratio */
+  /*transform: scaleY(-1);*/
+  top: 10px;           /* initial Y position */
+  left: 10px;          /* initial X position */
+  /* width: 5px;         /* size */
+  /* height: auto;         keeps aspect ratio */ 
   /*display: none;*/  
+}
+
+#planediv img {
+  width: 150px;      /* small plane size */
+  height: auto;     /* keep aspect ratio */
 }
