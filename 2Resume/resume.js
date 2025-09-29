@@ -28,30 +28,18 @@ function scheduleRandomAction() {
   }, randomDelay);
 }
 
+//This method sets up the plane and calls the method that actually causes the plane to move
 function flight() {
     console.log("plane");
-
-    // Random direction check FIRST
-    var ifOne = Math.floor(Math.random() * 2);
-    var firstCheck = ifOne === 0;
 
     // Create plane image
     plane.src = '../icons/plane.png';
     plane.id = 'plane';
     plane.style.position = 'absolute';
 
-    // Starting position
+    let start =  Math.random()*(window.innerHeight);
     let x = 0;
-    let y = 0;
-
-    if (firstCheck) {
-        x = 0;
-        y = 0;
-    } else {
-        x = 0;
-        y = window.innerHeight / 0.8; // careful: "/.8" = *larger than screen*
-        plane.style.transform = "rotate(330deg)"
-    }
+    let y = start;
 
     plane.style.left = x + 'px';
     plane.style.top = y + 'px';
@@ -61,46 +49,91 @@ function flight() {
 
     // Goals
     let goalx = window.innerWidth * 1.1;
-    let goaly = firstCheck ? window.innerHeight / 0.8 : 0;
+    start =  Math.random()*(window.innerHeight);
+    let goaly = firstCheck ? start : 0;
 
     // Movement
     var timer = setInterval(Run, 50);
 
     //2 dimensional array of the space between start and finish.
-    const myScreen = create2DArray((window.innerHeight / 0.8), goalx);
+    const myScreen = create2DArray((window.innerHeight/10), (goalx/10));
    
     //spin logic
     let rotation = 0;
 
-    function Run() {
-        //spin logic
-        if(rotation != 0){
-            plane.style.transform = "rotate(10deg)";
-            rotation += 10;
-            rotation = (rotation == 360)? 0 : rotation;
-        } else {
-            if(Math.random()*30 > 29){
-                plane.style.transform = "rotate(10deg)";
-                rotation += 10;
-            }
+    myScreen = flightPath(myScreen,x,y,goalx,goaly);
 
-            //calls to actual movement logic.
-            if (firstCheck) {
-                upDown(myScreen, x, y, goalx, goaly);
-            } else {
-                downUp(myScreen, x, y, goalx, goaly)
-                
-            }
-        }    
+    function Run() {
+        flyAway(rotation);
     }
 }
 
-function upDown(screen,  x, y, goalx, goaly){
+//in charge of finding the flight path
+function flightPath(screen,  x, y, goalx, goaly){
+    let pathLength = goalx*1.5;
+    let curLength = 0;
+    let stepNum = 0, xmove = 0, ymove = 0;
+    while(pathLength > curLength){
+        //checks if the plane is within one of the wall , 
+        // will have ot add a "fly off screen" clause when I actually do the flight 
+        if (Math.abs(y+1) >= window.innerHeight/10 || Math.abs(y-1) >= window.innerHeight/10)
+            return screen;
+        if (Math.abs(y+1) >= (goalx/10) || Math.abs(y-1) >= (goalx/10))
+            return screen;
         
+        //finds the biggest distance from cur to wall for either x or y
+        let dirMax = (goalx - x) > Math.abs(goaly - y) ? goalx - x: goaly - y;
+        if(pathLength - curLength > dirMax){
+            while(pathLength > curLength){
+                //checks if the plane is within one of the wall
+                //had to check a second time due to nested while loops
+                if (Math.abs(y+1) >= window.innerHeight/10 || Math.abs(y-1) >= window.innerHeight/10)
+                    return screen;
+                if (Math.abs(y+1) >= (goalx/10) || Math.abs(y-1) >= (goalx/10))
+                    return screen;
+                
+                //takes you on the straightest path you can to the goal location
+                if(y < goaly){
+                    screen[x+1,y+1] = stepNum +1;
+                } else if (y > goaly){
+                    screen[x+1,y-1] = stepNum + 1;
+                } else {
+                    screen[x+1,y] = stepNum + 1;
+                }
+                
+                //always update these guys, or everything breaks and infinite loops
+                stepNum++;
+                curLength = stepNum*10;
+            }
+        }
+
+        // basic movement logic
+        xmove = Math.random()*3 - 1;
+        ymove = Math.random()*3 - 1;
+        x = x + xmove;
+        y = y + ymove;
+        if (screen[x,y] == 0)
+            screen[x,y] = stepNum;
+        curLength = stepNum*10;
+    }
+    plane.remove();
+    clearInterval(timer);
+    return screen;
 }
 
-function downUp(){
-
+//in charge of actually taking the flight path that was found
+function flyAway(rotation){
+     //spin logic
+    if(rotation != 0){
+        plane.style.transform = "rotate(10deg)";
+        rotation += 10;
+        rotation = (rotation == 360)? 0 : rotation;
+    } else {
+        if(Math.random()*30 > 29){
+            plane.style.transform = "rotate(10deg)";
+            rotation += 10;
+        }
+    }
 }
 
     // document.getElementsByClassName("flip-card-inner")[0].onclick = function(){
