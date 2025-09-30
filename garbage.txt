@@ -41,3 +41,60 @@ downUp/resume.js/resume
                     plane.remove();
                     clearInterval(timer);
                 }
+
+
+flightPath/resume.js/resume
+
+//in charge of finding the flight path
+function flightPath(x, y, goalx, goaly){
+    let pathLength = goalx*1.5;
+    let curLength = 0;
+    let stepNum = 0, xmove = 0, ymove = 0;
+    let posx =0, posy=0;
+    while(pathLength > curLength){
+        stepNum++;
+        
+        if (Math.abs(y+1) >= window.innerHeight/10 || Math.abs(y-1) >= window.innerHeight/10)
+            return  myScreen;
+        if (Math.abs(y+1) >= (goalx/10) || Math.abs(y-1) >= (goalx/10))
+            return   myScreen;
+        
+        //finds the biggest distance from cur to wall for either x or y
+        let dirMax = (goalx - posx) > Math.abs(goaly - posy) ? goalx - posx: goaly -posy;
+        if(pathLength - curLength > dirMax){
+            while(pathLength > curLength){
+                //checks if the plane is within one of the wall
+                //had to check a second time due to nested while loops
+                if (Math.abs(y+1) >= window.innerHeight/10 || Math.abs(y-1) >= window.innerHeight/10)
+                    return   myScreen;
+                if (Math.abs(y+1) >= (goalx/10) || Math.abs(y-1) >= (goalx/10))
+                    return   myScreen;
+                
+                //takes you on the straightest path you can to the goal location
+                if(y < goaly){
+                     myScreen[posy+1][posx+1] = stepNum +1;
+                } else if (y > goaly){
+                     myScreen[posy-1][posx+1] = stepNum + 1;
+                } else {
+                     myScreen[posy][posx+1] = stepNum + 1;
+                }
+                
+                //always update these guys, or everything breaks and infinite loops
+                curLength = stepNum*10;
+                stepNum++;
+            }
+        }
+
+        // basic movement logic
+        xmove = Math.floor(Math.random()*3 - 1);
+        ymove = Math.floor(Math.random()*3 - 1);
+        posx = posx + xmove;
+        posy = posy + ymove;
+        if(myScreen.length < posy && posy >=0 && myScreen[0].length < posx && 0 <= posx){
+            if (myScreen[posy][posx] == 0)
+                myScreen[posy][posx] = stepNum;
+            curLength = stepNum*10;
+        }  
+    }
+    return  myScreen;
+}
