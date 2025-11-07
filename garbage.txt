@@ -155,3 +155,27 @@ function flightPath(goalx, goaly){
     }
     return myScreen;
 }
+
+
+// for(let row = -1; row < 2; row++){
+        //     for(let col = -1; col < 2; col++){
+        //         if (screeny + row >= 0 &&
+        //             screeny + row <  myScreen.length &&
+        //             screenx + col >= 0 &&
+        //             screenx + col <  myScreen[0].length){
+        //             if (myScreen[screeny + row][screenx + col] != 0){ 
+        //                 y += row*10;
+        //                 x += col*10;
+        //                 // plane.style.top = y + "px";
+        //                 // plane.style.left = x + "px";
+        //                 // screeny += row;
+        //                 // screenx += col;
+        //                 // myScreen[screeny][screenx] = 0;
+        //                 moveMade = true;
+        //                 break;
+        //             }
+
+        //         }
+        //     }//screeny + (row) >= 0 && screenx + (col) >= 0 &&
+        //     //screenx + (col) <  myScreen[0].length && screeny + (row) <  myScreen.length)
+        // }

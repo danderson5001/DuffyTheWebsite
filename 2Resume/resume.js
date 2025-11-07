@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
 //Allows plane object to exist everywhere and other globals
 const plane = document.createElement('img');
-let x,y,screenx, screeny,rotation, myScreen, timer;
+let x,y,screenx, screeny,rotation, curPointx, curPointy, myScreen, timer;
 let locationx=0, locationy=0;
 const points = new Array[2][6];
 
@@ -58,6 +58,10 @@ function preFlight(){
    
     //spin logic
     rotation = 0;
+
+    //keeps tracking of which point we are heading for
+    curPointx = 0;
+    curPointy = 0;
 
     /*
         Assigns the path the plane will take by creating 
@@ -130,33 +134,20 @@ function flyAway(){
         }
         rotation = (rotation >= 360)? 0 : rotation;
     } else {
+        // movement logic
+        var moveMade = false;
+        // if(){
+            //put movement here
+        // }
+        
 
-        // //actual movement logic
-        // var moveMade = false;
-        // for(let row = -1; row < 2; row++){
-        //     for(let col = -1; col < 2; col++){
-        //         if (screeny + row >= 0 &&
-        //             screeny + row <  myScreen.length &&
-        //             screenx + col >= 0 &&
-        //             screenx + col <  myScreen[0].length){
-        //             if (myScreen[screeny + row][screenx + col] != 0){ 
-        //                 y += row*10;
-        //                 x += col*10;
-        //                 plane.style.top = y + "px";
-        //                 plane.style.left = x + "px";
-        //                 screeny += row;
-        //                 screenx += col;
-        //                 myScreen[screeny][screenx] = 0;
-        //                 moveMade = true;
-        //                 break;
-        //             }
-
-        //         }
-        //     }//screeny + (row) >= 0 && screenx + (col) >= 0 &&
-        //     //screenx + (col) <  myScreen[0].length && screeny + (row) <  myScreen.length)
+        if (points[0][curPointx] >= x-10 && points[0][curpointx] <= x + 10){ 
+            if (points[0][curPointx] >= x-10 && points[0][curpointx] <= x + 10){
+                curPointx++;
+                curPointy++;
+        }
         // if (moveMade) break;
         // }
-        // next++;
     }
     if(x > window.innerWidth + 5){
         plane.remove();
