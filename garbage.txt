@@ -98,3 +98,60 @@ function flightPath(x, y, goalx, goaly){
     }
     return  myScreen;
 }
+
+
+
+---------------------------------------------------------------11/7/25
+function create2DArray(rows, cols) {
+    const arr = new Array(Math.floor(rows));
+    for (let i = 0; i < rows; i++) {
+        arr[i] = new Array(Math.floor(cols)).fill(0);
+    }
+    return arr;
+}
+
+//this method will fill the array 
+function flightPath(goalx, goaly){
+    let pathLength = goalx * 1.5;
+    let curLength = 0;
+    let stepNum = 0, xmove = 0, ymove = 0;
+    let posx = Math.floor(x / 10), posy = Math.floor(y / 10);
+
+    while(pathLength > curLength){
+        stepNum++;
+
+        //checks if the plane is within one of the wall , 
+        // will have ot add a "fly off  myScreen" clause when I actually do the flight 
+        if (posy < 0 || posy >= myScreen.length) return myScreen;
+        if (posx < 0 || posx >= myScreen[0].length) return myScreen;
+
+        // straightest path
+        // use posy vs. goal (scaled down to grid) instead of y vs. goaly (pixels)
+        if (posy < Math.floor(goaly / 10)){
+            if (posy + 1 < myScreen.length && posx + 1 < myScreen[0].length)
+                myScreen[posy + 1][posx + 1] = stepNum;
+        } else if (posy > Math.floor(goaly / 10)){
+            if (posy - 1 >= 0 && posx + 1 < myScreen[0].length)
+                myScreen[posy - 1][posx + 1] = stepNum;
+        } else {
+            if (posy >= 0 && posx + 1 < myScreen[0].length)
+                myScreen[posy][posx + 1] = stepNum;
+        }
+
+        // random wiggle room
+        // basic movement logic
+        xmove = Math.floor(Math.random() * 3 - 1);
+        ymove = Math.floor(Math.random() * 3 - 1);
+        posx = posx + xmove;
+        posy = posy + ymove;
+
+        if (posy >= 0 && posy < myScreen.length &&
+            posx >= 0 && posx < myScreen[0].length) {
+            if (myScreen[posy][posx] == 0)
+                myScreen[posy][posx] = stepNum;
+        }
+
+        curLength = stepNum * 10;
+    }
+    return myScreen;
+}
