@@ -1,17 +1,23 @@
+//skills
+var words = ["Java","SQL", "Python", "c#", "Microsoft Office", "Html", "Git", "Docker", "VSCode", "Java Script"]
+var words2 = ["Artificial Intelligence", "Programming Language Concepts","Databases and Web Design", "Objects and Design", "Algorithms", "Problem Solving Seminar", "Graphic Design", "Robotic Agents"]
 document.addEventListener("DOMContentLoaded", function (){
+    createTrain(words, "../icons/train.png", -1);       // normal train (right → left)
+    createTrain(words2, "../icons/train_flip.png", 1);  // reverse train (left → right)
     scheduleRandomAction();
+
     Array.from(document.getElementsByClassName("flip-card-inner")).forEach(element => {
         element.onclick = function(){
             this.classList.toggle("active")
         }
     });
+
     Array.from(document.getElementsByClassName("hex-inner")).forEach(element => {
         element.onclick = function(){
             this.classList.toggle("active")
         }
     });
-})
-
+});
 
 
 //Flight Stuff below here ------------------------------------------------------------------------------------------------------------
@@ -20,9 +26,14 @@ document.addEventListener("DOMContentLoaded", function (){
 const plane = document.createElement('img');
 let x,y,screenx, screeny,rotation, curPointx, curPointy, myScreen, timer;
 let locationx=0, locationy=0;
-const points = new Array[2][6];
+const turnPoints = [];
+let ptInTP = 0;
 
+let spinning = false;
+let spinOffset = 0;
+let spinSpeed = 20;
 
+//this allows for the creation and run time of the plane
 function scheduleRandomAction() {
     if(!document.body.contains(plane)) {
         preFlight();
@@ -35,6 +46,7 @@ function scheduleRandomAction() {
     }
 }
 
+//everything that needs to be set up for the plane to be able to exist but before any movement
 function preFlight(){
     // Create plane image
     plane.src = '../icons/plane.png';
@@ -62,101 +74,174 @@ function preFlight(){
     //keeps tracking of which point we are heading for
     curPointx = 0;
     curPointy = 0;
-
-    /*
-        Assigns the path the plane will take by creating 
-        6 random points acrross the screeen it must hit 
-    **/
-    var sixth = window.innerWidth/6;
-    count = 0;
-    var j = 0;
-    for(var i = 0; count == 5;){
-        i += Math.random * sixth;
-        j  = Math.random * window.innerWidth;
-        points[count][0] = i;
-        points[count][1] = j;
-        count ++;
-    }
-
-//test code start
-    // let str = "";
-    // for(var i = 0; i < myScreen.length; i++){
-    //     for(var j =0;j<myScreen[0].length;j++){
-    //         if (myScreen[i][j] != 0 ) str += myScreen[i][j] + ", ";
-    //     }
-    //     str += "\n";
-    // }
-    // console.log(str +"!");
-//test code end
 }
 
 
 //This method sets up the plane and calls the method that actually causes the plane to move
 function flight() {
     console.log("plane");
-    // Movement
-    timer = setInterval(Run, 50);
 
-    //variables for current location for fly 
-    function Run() {
-        flyAway();
+    /*
+        Assigns the path the plane will take by creating 
+        7 random points acrross the screeen it must hit 
+        - turnPoints is Global 
+    **/
+    for (let i = 0; i < 7; i++) {
+        turnPoints.push([
+            Math.random() * window.innerWidth,
+            Math.random() * window.innerHeight
+        ]);
     }
+
+    turnPoints.push([
+        window.innerWidth + 2, 
+        Math.random() * window.innerHeight
+    ])
+    //I like the idea of sorting but it was inda boring looking, [[ fixed, it looks better
+    turnPoints.sort((a, b) => a[0] - b[0]);
+
+    // Movement
+    timer = setInterval(run, 35);
+    
+    //called on
+    function run(){
+        flyAway();
+    } 
 }
 
 //in charge of actually taking the flight path that was found
 function flyAway(){
-
-    //init vars
-    screenx = Math.floor(x / 10);
-    screeny = Math.floor(y / 10);
-
-    //lots of spinning logic
-    let spinSize = 10;
-    if((Math.random()*300) > 299){
-        rotation = spinSize;
-        plane.style.transform = "rotate("+rotation+"deg)";
-    }
-    if(rotation != 0){
-        rotation += spinSize;
-        plane.style.transform = "rotate("+rotation+"deg)";
-        if((rotation-20)%40== 0 && (rotation < 90||rotation > 270)){
-            plane.style.top = (y-spinSize) + "px";
-            y = y-spinSize;
-        } else if (rotation%40==0 && rotation < 160){
-            plane.style.left = (x-spinSize) + "px";
-            x = x-spinSize;
-        } else if ((rotation-20)%40== 0 && (rotation > 90 && rotation < 270)){
-            plane.style.top = (y+spinSize) + "px";
-            y = y +spinSize;
-        }else if(rotation%40==0 && rotation > 160){
-            plane.style.left = (x+spinSize)+"px";
-            x = x + spinSize;
-        }
-        rotation = (rotation >= 360)? 0 : rotation;
-    } else {
-        // movement logic
-        var moveMade = false;
-        // if(){
-            //put movement here
-        // }
-        
-
-        if (points[0][curPointx] >= x-10 && points[0][curpointx] <= x + 10){ 
-            if (points[0][curPointx] >= x-10 && points[0][curpointx] <= x + 10){
-                curPointx++;
-                curPointy++;
-        }
-        // if (moveMade) break;
-        // }
-    }
-    if(x > window.innerWidth + 5){
+    
+    if(turnPoints.length === 0){
         plane.remove();
         clearInterval(timer);
+        return;
     }
-   
+
+    if(!spinning && Math.random() > 0.997){
+        spinning = true;
+    }
+    
+    if(spinning){
+        spinOffset += spinSpeed;
+
+        if(spinOffset >= 360){
+            spinOffset = 0;
+            spinning = false;
+        }
+    }
+
+    var distx = turnPoints[0][0] - x;
+    var disty = turnPoints[0][1] - y;
+    var dist = Math.sqrt(distx*distx + disty*disty);
+    if (dist < 7){
+        //need to update x and y
+        x = turnPoints[0][0];
+        y = turnPoints[0][1];
+        
+        //.shift will remove the first element, similar as to how I was trying to use pop() originally
+        turnPoints.shift();
+    } else {
+        // Move proportionally toward target
+        x += (distx / dist) * 5;
+        y += (disty / dist) * 5;
+
+        //face rotation towards target
+        let targetAngle = Math.atan2(disty, distx) * 180 / Math.PI;
+        rotation += (targetAngle - rotation) * 0.1;
+        plane.style.transform = `rotate(${rotation + spinOffset}deg)`;
+    }
+
+    plane.style.top= y + "px";
+    plane.style.left = x + "px"; 
 }
 
-    // document.getElementsByClassName("flip-card-inner")[0].onclick = function(){
-    //     this.classList.toggle("active")
-    // }
-   
+//---------------------------------------------------------------------------------------------------------------------
+// ------ Trains
+
+function createTrain(words, engineSrc, direction){
+
+    const train = document.createElement("div");
+    train.id = "train";
+    train.style.marginTop = "25px";
+    train.style.display = "flex";
+    train.style.alignItems = "center";
+    train.style.left = "-800px";   // start off screen
+    train.style.bottom = "40px";
+    train.style.position = "relative";
+
+    // locomotive
+    const engine = document.createElement("img");
+    engine.src = engineSrc;
+    engine.style.height = "95px"
+
+    if(direction === -1){
+        train.appendChild(engine);
+    }
+
+    // cars
+    words.forEach(word => {
+
+        const car = document.createElement("div");
+        car.style.position = "relative";
+
+        const img = document.createElement("img");
+        img.src = "../icons/train_car.png";
+        img.style.height = "85px";
+        if (direction === 1 ){
+            img.style.height = "100px"
+        }
+
+        const label = document.createElement("div");
+        label.innerText = word; 
+        label.style.position = "absolute";
+        label.style.top = "5px"; // Align to the top
+        label.style.left = "50%";
+        label.style.transform = "translateX(-50%)"; // Only center horizontally
+        label.style.fontWeight = "bold";
+        label.style.color = "white";
+        label.style.fontSize = "18px";
+
+        car.appendChild(img);
+        car.appendChild(label);
+        train.appendChild(car);
+
+    });
+
+    if(direction === 1){
+        train.appendChild(engine);
+    }
+
+    const anchor = document.getElementById("train-anchor");
+    if(anchor && direction===-1) {
+        anchor.after(train); 
+    }
+    const anchor2 = document.getElementById("train-anchor2");
+    if (anchor2 && direction===1) {
+        anchor2.after(train);
+    }
+    moveTrain(train, direction);
+}
+
+function moveTrain(train, direction){
+
+    let x = (direction === -1) ? window.innerWidth + 400 : -800;
+    let speed = (direction === -1) ? 1.6 : 1; // Top train moves twice as fast
+
+
+    function animate(){
+        x += speed * direction;
+        train.style.left = x + "px";
+
+        if(direction === -1 && x < -800){
+            x = window.innerWidth + 400;
+        }
+
+        if(direction === 1 && x > window.innerWidth + 400){
+            x = -800;
+        }
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+}

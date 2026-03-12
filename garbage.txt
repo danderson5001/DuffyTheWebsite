@@ -179,3 +179,50 @@ function flightPath(goalx, goaly){
         //     }//screeny + (row) >= 0 && screenx + (col) >= 0 &&
         //     //screenx + (col) <  myScreen[0].length && screeny + (row) <  myScreen.length)
         // }
+
+        
+        //uses turnPoints Stack? of tuples to move the plane around
+        // array is already filed in the flight() method
+        if((!Math.abs(x - turnPoints[0][0]) < 5 && Math.abs(x - turnPoints[0][0]) > -5) > -5){
+            if(Math.abs(y - turnPoints[0][1]) < 5 && Math.abs(y - turnPoints[0][1]) > -5){
+                //if we are at the point, remove that point to aim for next
+                turnPoints.pop();                
+            } else {
+                if (y > turnPoints[0][1]){
+                    y = y - 5;
+                } else {
+                    y = y + 5;
+                }
+            }
+        } else {
+            x = x + 5
+            if(!Math.abs(y - turnPoints[0][1]) < 5 && Math.abs(y - turnPoints[0][1]) > -5){
+                if (y > turnPoints[0][1]){
+                    y = y - 5;
+                } else {
+                    y = y + 5;
+                }
+            }
+        }
+        
+        /lots of spinning logic
+    let spinSize = 10;
+    if((Math.random()*300) > 299){
+        rotation = spinSize;
+        plane.style.transform = "rotate("+rotation+"deg)";
+    }
+    if(rotation != 0){
+        rotation += spinSize;
+        plane.style.transform = "rotate("+rotation+"deg)";
+        if((rotation-20)%40== 0 && (rotation < 90||rotation > 270)){
+            y = y-spinSize;
+        } else if (rotation%40==0 && rotation < 160){
+            x = x-spinSize;
+        } else if ((rotation-20)%40== 0 && (rotation > 90 && rotation < 270)){
+            y = y +spinSize;
+        }else if(rotation%40==0 && rotation > 160){
+            x = x + spinSize;
+        }
+        plane.style.left = x + "px";
+        plane.style.top = y + "px";
+        rotation = (rotation >= 360)? 0 : rotation;
