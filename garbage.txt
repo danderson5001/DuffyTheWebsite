@@ -226,3 +226,38 @@ function flightPath(goalx, goaly){
         plane.style.left = x + "px";
         plane.style.top = y + "px";
         rotation = (rotation >= 360)? 0 : rotation;
+
+
+
+<hr style="height:5px; background-color: grey;margin-top: 0%;">
+
+<div style="
+    width: 200%;
+    height: 20px;
+    background: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 7px,
+        grey 7px,
+        grey 8px
+    );
+    margin-top: 0;
+    margin-bottom: 0;
+    border: none;
+    position: relative;
+    bottom: 10px;
+"></div>
+
+
+
+
+
+<hr style="height: 5px; background-color: grey; border: none; margin-top: 0; margin-bottom: 0;">
+<div style="
+    height: 15px;
+    background: repeating-linear-gradient(to right, transparent, transparent 7px, grey 7px, grey 8px);
+    margin-top: -10px; /* Overlaps the <hr> and train tires slightly */
+    width: 100%;
+"></div>
+<hr style="margin-top: 0px; height:5px; background-color: grey;">
+<h1></h1>

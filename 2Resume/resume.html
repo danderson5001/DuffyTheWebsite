@@ -4,6 +4,11 @@
     <title>Duffy's Website</title>
     <link rel="icon" type="image/png" href="../icons/onion.ico">
     <link rel="stylesheet" href="resume.css">
+    
+    <!--wheel of fortune stuff-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://bobboteck.github.io/WheelOfFortune/css/wheeloffortune.css" />
+    <script src="https://bobboteck.github.io/WheelOfFortune/js/wheeloffortune.min.js"></script>
 </head>
 <body> 
     <p class= resumeTitle style= "display: inline" > Welcome to my resume! </p>
@@ -132,11 +137,49 @@
         </div>
     </div>
 </div>
-<h1 id='train-anchor'style=" font-size: 50px; text-align: center; color: rgb(82, 35, 177);"> Skills</h1>
-<h1></h1>
+<h1 style=" font-size: 50px; text-align: center; color: rgb(82, 35, 177);  margin-bottom: 5px;"> Skills</h1>
+<h3 id='train-anchor'style="text-align: center; color: rgb(82, 35, 177);  margin-top: 5px;"> (Click and hold to pause the train!) </h3>
+<div style="
+    height: 20px;
+    width: 200%;
+    background:
+        /* Top horizontal line */
+        linear-gradient(to bottom, grey 0px, grey 5px, transparent 5px),
+        /* Vertical lines */
+        repeating-linear-gradient(to right, transparent, transparent 7px, grey 7px, grey 8px),
+        /* Bottom horizontal line */
+        linear-gradient(to bottom, transparent 15px, grey 15px);
+    margin-top: -10px; /* Overlap train tires slightly */
+"></div>
 
-<h1 id='train-anchor2'style=" font-size: 50px; text-align: center; color: rgb(82, 35, 177);"> Relevant Course Work</h1>
-<h1></h1>
+<h1 style=" font-size: 50px; text-align: center; color: rgb(82, 35, 177); margin-top: 10px; margin-bottom: 5px;"> Relevant Course Work</h1>
+<h3 id='train-anchor2'style="text-align: center; color: rgb(82, 35, 177); margin-top: 5px"> (Click and hold to pause the train!) </h3>
+<div style="
+    height: 20px;
+    width: 200%;
+    background:
+        /* Top horizontal line */
+        linear-gradient(to bottom, grey 0px, grey 5px, transparent 5px),
+        /* Vertical lines */
+        repeating-linear-gradient(to right, transparent, transparent 7px, grey 7px, grey 8px),
+        /* Bottom horizontal line */
+        linear-gradient(to bottom, transparent 15px, grey 15px);
+    margin-top: -10px; /* Overlap train tires slightly */
+"></div>
+<h1 style=" font-size: 50px; text-align: center; color: rgb(82, 35, 177);"> FAQ </h1>
+
+
+
+<div id="wheel-container" style="margin: 20px auto; width: 500px; height: 500px;">
+  <canvas id="wheel-of-fortune" width="500" height="500"></canvas>
+</div>
+<button id="spin-button" style="display: block; margin: 20px auto; padding: 10px 20px; font-size: 18px;">SPIN</button>
+<div id="answer-popup" style="display: none; margin: 20px auto; font-size: 20px; text-align: center;">
+  Answer: <span id="answer-text"></span>
+</div>
+
+
+
 <div id = "planediv"></div>
 <script src="resume.js"></script>
 </html>

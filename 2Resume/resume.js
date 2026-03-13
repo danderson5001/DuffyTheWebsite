@@ -163,12 +163,32 @@ function createTrain(words, engineSrc, direction){
 
     const train = document.createElement("div");
     train.id = "train";
-    train.style.marginTop = "25px";
+    train.style.marginTop = "45px";
     train.style.display = "flex";
     train.style.alignItems = "center";
     train.style.left = "-800px";   // start off screen
-    train.style.bottom = "40px";
+    train.style.bottom = "5px";
     train.style.position = "relative";
+    train.style.cursor = "pointer"; // Change cursor to indicate clickability
+
+    // // Add paused flag as a dataset property
+    // train.dataset.paused = "false";
+
+    // Attach isMouseDown as a property of the train
+    train.isMouseDown = false;
+
+    train.addEventListener("mousedown", function() {
+        train.isMouseDown = true;
+    });
+
+    train.addEventListener("mouseup", function() {
+        train.isMouseDown = false;
+    });
+
+    train.addEventListener("mouseleave", function() {
+        train.isMouseDown = false;
+    });
+
 
     // locomotive
     const engine = document.createElement("img");
@@ -224,14 +244,15 @@ function createTrain(words, engineSrc, direction){
 }
 
 function moveTrain(train, direction){
-
     let x = (direction === -1) ? window.innerWidth + 400 : -800;
-    let speed = (direction === -1) ? 1.6 : 1; // Top train moves twice as fast
+    let speed = (direction === -1) ? 2 : 1.5; // Top train moves twice as fast
 
 
     function animate(){
-        x += speed * direction;
-        train.style.left = x + "px";
+        if (!train.isMouseDown) {
+            x += speed * direction;
+            train.style.left = x + "px";
+        }
 
         if(direction === -1 && x < -800){
             x = window.innerWidth + 400;
@@ -245,3 +266,60 @@ function moveTrain(train, direction){
     }
     animate();
 }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------Wheeldocument.addEventListener("DOMContentLoaded", function() {
+    // Define your questions and answers
+document.addEventListener("DOMContentLoaded", function() {
+    // Define your questions and answers
+    const segments = [
+      { text: "Two Strengths", fillStyle: "#3498db" },
+      { text: "Two Weaknesses", fillStyle: "#e74c3c" },
+      { text: "Question 3", fillStyle: "#3498db" },
+      { text: "Question 4", fillStyle: "#e74c3c" },
+      { text: "Question 5", fillStyle: "#3498db" },
+      { text: "Question 6", fillStyle: "#e74c3c" }
+    ];
+
+    const answers = [
+      "Answer 1",
+      "Answer 2",
+      "Answer 3",
+      "Answer 4",
+      "Answer 5",
+      "Answer 6"
+    ];
+
+    // Initialize the wheel
+    const wheel = new Winwheel({
+      'canvasId': 'wheel-of-fortune',
+      'numSegments': segments.length,
+      'outerRadius': 240,
+      'textFontSize': 16,
+      'segments': segments,
+      'animation': {
+        'type': 'spinToStop',
+        'duration': 5,
+        'spins': 8,
+        'callbackFinished': onWheelStop
+      }
+    });
+
+    wheel.draw();
+
+    // Spin the wheel when the button is clicked
+    document.getElementById('spin-button').addEventListener('click', function() {
+      wheel.startAnimation();
+      this.disabled = true;
+    });
+
+    // Handle wheel stop: Show the answer
+    function onWheelStop() {
+      const winningSegment = wheel.getIndicatedSegment();
+      const index = segments.findIndex(segment => segment.text === winningSegment.text);
+      document.getElementById('answer-text').textContent = answers[index];
+      document.getElementById('answer-popup').style.display = 'block';
+      document.getElementById('spin-button').disabled = false;
+    }
+});

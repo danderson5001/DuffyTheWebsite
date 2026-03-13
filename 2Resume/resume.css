@@ -138,3 +138,7 @@ body{
   width: 150px;      /* small plane size */
   height: auto;     /* keep aspect ratio */
 }
+
+span {
+  white-space: nowrap;
+}
